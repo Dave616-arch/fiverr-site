@@ -5,6 +5,8 @@ body {
     padding: 0;
     background-color: #f8f8f8;
     text-align: center;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 header {
@@ -14,6 +16,7 @@ header {
     border-radius: 12px;
     margin: 20px auto;
     max-width: 900px;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 /* Section styling */
@@ -42,26 +45,10 @@ section {
     filter: blur(0);
 }
 
-/* Staggered animation effect */
-.fade-section:nth-child(2) { transition-delay: 0.1s; }
-.fade-section:nth-child(3) { transition-delay: 0.2s; }
-.fade-section:nth-child(4) { transition-delay: 0.3s; }
-
-/* Button animation */
-.fade-button {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.fade-button.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* Enlarging effect for active section */
 .active-section {
-    transform: scale(1.1) !important;
+    transform: scale(1.15) !important;
+    transition: transform 0.2s ease-out;
 }
 
 /* Mobile optimization */
