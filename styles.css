@@ -1,16 +1,64 @@
+/* 全局样式 */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f5f5f7;
+    color: #333;
     margin: 0;
     padding: 0;
     text-align: center;
-    background: #f8f8f8;
 }
 
-/* 🔥 交错滚动动画 + 模糊 + 缩放 + 回弹 */
+/* 让所有的 section 居中 */
+section {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto; /* 居中 */
+    text-align: center;
+    padding: 60px 20px; /* 增加上下间距 */
+}
+
+/* 让 service 和 portfolio 的子元素有更好的间距 */
+.service, .portfolio-item {
+    margin-bottom: 40px; /* 增加板块间距 */
+    padding: 20px;
+    border-radius: 12px; /* 圆角优化 */
+    background: rgba(255, 255, 255, 0.6); /* 轻微半透明效果 */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+/* 让标题更明显 */
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* 按钮美化 */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background: #007aff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #005ecb;
+}
+
+/* 滚动动画（模糊 + 放大 + 透明 + 阴影） */
 .fade-section {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
-    filter: blur(6px);
+    filter: blur(8px);
     transition: all 0.4s cubic-bezier(.165, .84, .44, 1);
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
 }
@@ -22,53 +70,19 @@ body {
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* ⏳ 让不同区块有时间延迟，增强层次感 */
-.fade-section:nth-child(2) { transition-delay: 0.1s; }
-.fade-section:nth-child(3) { transition-delay: 0.2s; }
-.fade-section:nth-child(4) { transition-delay: 0.3s; }
+/* 交错动画 - 让区块逐步进入 */
+.fade-section:nth-child(2) { transition-delay: 0.2s; }
+.fade-section:nth-child(3) { transition-delay: 0.4s; }
+.fade-section:nth-child(4) { transition-delay: 0.6s; }
 
-/* 🎯 按钮独立动画 */
+/* 按钮独立动画 */
 .fade-button {
     opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
 .fade-button.visible {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* 🎨 UI 设计 */
-header, section, footer {
-    padding: 50px;
-    background: white;
-    margin: 20px auto;
-    border-radius: 20px;
-    max-width: 800px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* 📌 服务区块 */
-.service, .portfolio-item {
-    background: white;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 🎨 按钮样式 */
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #007aff;
-    color: white;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.btn:hover {
-    background: #005ecb;
 }
