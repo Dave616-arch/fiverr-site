@@ -1,4 +1,4 @@
-/* Default section styling */
+/* 默认样式 */
 section {
     padding: 80px 20px;
     max-width: 800px;
@@ -10,12 +10,12 @@ section {
     transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
-/* Center the text */
+/* 让文本居中 */
 h1, h2, h3, p {
     text-align: center;
 }
 
-/* Smooth fade-in animation */
+/* 平滑渐入动画 */
 .fade-section {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
@@ -29,12 +29,12 @@ h1, h2, h3, p {
     filter: blur(0);
 }
 
-/* Staggered animation delay */
+/* 交错动画效果 */
 .fade-section:nth-child(2) { transition-delay: 0.2s; }
 .fade-section:nth-child(3) { transition-delay: 0.4s; }
 .fade-section:nth-child(4) { transition-delay: 0.6s; }
 
-/* Button animation */
+/* 按钮动画 */
 .fade-button {
     opacity: 0;
     transform: translateY(20px);
@@ -46,12 +46,12 @@ h1, h2, h3, p {
     transform: translateY(0);
 }
 
-/* Enlarge the centered section during scroll */
+/* **增强的放大效果** */
 .active-section {
-    transform: scale(1.05);
+    transform: scale(1.12) !important;
 }
 
-/* Responsive adjustments */
+/* 移动端适配 */
 @media (max-width: 768px) {
     section {
         padding: 60px 15px;
