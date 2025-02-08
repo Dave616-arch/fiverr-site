@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dave Web - Fiverr Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script> <!-- 引入 JavaScript -->
+</head>
+<body>
+
+    <header>
+        <h1>Dave Web</h1>
+        <p>Professional Web Developer | Fiverr Freelancer</p >
+        View My Fiverr Profile
+    </header>
+
+    <section id="services">
+        <h2>My Fiverr Services</h2>
+        <p>Here are some of the key services I offer on Fiverr:</p >
+
+        <div class="service">
+            <h3>⭐ Custom Web Development</h3>
+            <p>Fully customized, responsive, and high-performance websites tailored to your business.</p >
+        </div>
+        
+        <div class="service">
+            <h3>🎨 Front-end Development</h3>
+            <p>Modern UI/UX designs built using HTML, CSS, JavaScript, and frameworks like React and Vue.js.</p >
+        </div>
+
+        <div class="service">
+            <h3>⚙️ Back-end Development</h3>
+            <p>Scalable server-side solutions with Node.js, Express, Django, Flask, and secure databases.</p >
+        </div>
+
+        <div class="service">
+            <h3>🚀 Website Speed Optimization</h3>
+            <p>Faster load times with optimized images, minified CSS/JS, and caching strategies.</p >
+        </div>
+
+        <div class="service">
+            <h3>🛠️ Bug Fixing & Debugging</h3>
+            <p>Diagnosing and fixing JavaScript, CSS, and server-side issues for smooth operation.</p >
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Have a project in mind? Let’s work together! Reach out to me on Fiverr:</p >
+        
+    </section>
+
+    <footer>
+        <p>© 2025 Dave Web | Powered by Fiverr</p >
+    </footer>
+
+    <script>
+        // 添加滚动触发动画
+        document.addEventListener("DOMContentLoaded", function () {
+            const sections = document.querySelectorAll(".service, .btn");
+
+            function revealOnScroll() {
+                sections.forEach((section) => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.85) {
+                        section.classList.add("visible");
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll(); // 页面加载时检查
+        });
+    </script>
+
+    <style>
+        /* 平滑滚动动画 */
+        .service, .btn {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .service.visible, .btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</body>
+</html>
