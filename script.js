@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
     let ticking = false;
+    let isTouching = false;
+    let lastTouchTime = 0;
 
     function checkScroll() {
         sections.forEach((section) => {
@@ -36,17 +38,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Auto-align nearest section
-        clearTimeout(window.scrollTimeout);
-        window.scrollTimeout = setTimeout(() => {
-            let targetSection = sections[centerIndex];
-            if (targetSection) {
-                window.scrollTo({
-                    top: window.scrollY + targetSection.getBoundingClientRect().top - (window.innerHeight / 2) + (targetSection.offsetHeight / 2),
-                    behavior: "smooth"
-                });
-            }
-        }, 100);
+        if (!isTouching) {
+            clearTimeout(window.scrollTimeout);
+            window.scrollTimeout = setTimeout(() => {
+                let targetSection = sections[centerIndex];
+                if (targetSection) {
+                    window.scrollTo({
+                        top: window.scrollY + targetSection.getBoundingClientRect().top - (window.innerHeight / 2) + (targetSection.offsetHeight / 2),
+                        behavior: "smooth"
+                    });
+                }
+            }, 100);
+        }
     }
 
     document.addEventListener("scroll", () => {
@@ -59,5 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    checkScroll(); // Ensure animations apply on page load
+    document.addEventListener("touchstart", () => { isTouching = true; });
+    document.addEventListener("touchmove", () => { lastTouchTime = Date.now(); });
+    document.addEventListener("touchend", () => {
+        isTouching = false;
+        setTimeout(() => {
+            if (Date.now() - lastTouchTime > 100) updateActiveSection();
+        }, 200);
+    });
+
+    checkScroll();
 });
