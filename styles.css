@@ -1,76 +1,60 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(".fade-section");
-    const texts = document.querySelectorAll(".fade-text");
-    let ticking = false;
-    let isTouching = false;
-    let lastTouchTime = 0;
+/* General styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    text-align: center;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
 
-    function checkScroll() {
-        texts.forEach((text) => {
-            let rect = text.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                text.classList.add("visible");
-            } else {
-                text.classList.remove("visible");
-            }
-        });
+header {
+    background: #ffffff;
+    padding: 80px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 900px;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
 
-        updateActiveSection();
+/* Section styling */
+section {
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Fade effect for text */
+.fade-text {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, filter 0.5s ease-out;
+}
+
+.fade-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* Enlarging effect for active section */
+.active-section {
+    transform: scale(1.15) !important;
+    transition: transform 0.2s ease-out;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    section {
+        padding: 60px 15px;
+        max-width: 90%;
     }
-
-    function updateActiveSection() {
-        let centerIndex = 0;
-        let minDistance = Infinity;
-
-        sections.forEach((section, index) => {
-            let rect = section.getBoundingClientRect();
-            let centerDistance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
-            if (centerDistance < minDistance) {
-                minDistance = centerDistance;
-                centerIndex = index;
-            }
-        });
-
-        sections.forEach((section, index) => {
-            if (index === centerIndex) {
-                section.classList.add("active-section");
-            } else {
-                section.classList.remove("active-section");
-            }
-        });
-
-        if (!isTouching) {
-            clearTimeout(window.scrollTimeout);
-            window.scrollTimeout = setTimeout(() => {
-                let targetSection = sections[centerIndex];
-                if (targetSection) {
-                    window.scrollTo({
-                        top: window.scrollY + targetSection.getBoundingClientRect().top - (window.innerHeight / 2) + (targetSection.offsetHeight / 2),
-                        behavior: "smooth"
-                    });
-                }
-            }, 100);
-        }
-    }
-
-    document.addEventListener("scroll", () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                checkScroll();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    document.addEventListener("touchstart", () => { isTouching = true; });
-    document.addEventListener("touchmove", () => { lastTouchTime = Date.now(); });
-    document.addEventListener("touchend", () => {
-        isTouching = false;
-        setTimeout(() => {
-            if (Date.now() - lastTouchTime > 100) updateActiveSection();
-        }, 200);
-    });
-
-    checkScroll();
-});
+}
