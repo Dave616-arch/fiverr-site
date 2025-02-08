@@ -1,9 +1,9 @@
-let timeout = null;
-let isUserScrolling = false;
+let timeout = null; // 用于检测手指是否真的离开
+let lastInteractionTime = 0; // 记录最后一次交互时间
 
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
-
+    
     function checkScroll() {
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
@@ -34,38 +34,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function smoothScrollToSection(section) {
-        if (!section || isUserScrolling) return;
+        if (!section) return;
         section.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function handleEndInteraction() {
-        if (!isUserScrolling) {
+        let now = Date.now();
+        if (now - lastInteractionTime >= 200) {
             let closestSection = findClosestSection();
             smoothScrollToSection(closestSection);
         }
     }
 
-    function startUserScroll() {
-        isUserScrolling = true;
-        clearTimeout(timeout);
-    }
-
-    function stopUserScroll() {
-        isUserScrolling = false;
-        clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 300); // 停止滑动 0.3 秒后再触发
-    }
-
     document.addEventListener("scroll", () => {
-        startUserScroll();
+        lastInteractionTime = Date.now();
+        clearTimeout(timeout);
+        timeout = setTimeout(handleEndInteraction, 200);
         requestAnimationFrame(checkScroll);
     });
 
-    document.addEventListener("touchmove", startUserScroll);
-    document.addEventListener("mousemove", startUserScroll);
+    document.addEventListener("touchend", () => {
+        lastInteractionTime = Date.now();
+        clearTimeout(timeout);
+        timeout = setTimeout(handleEndInteraction, 200);
+    });
 
-    document.addEventListener("touchend", stopUserScroll);
-    document.addEventListener("mouseup", stopUserScroll);
+    document.addEventListener("mouseup", () => {
+        lastInteractionTime = Date.now();
+        clearTimeout(timeout);
+        timeout = setTimeout(handleEndInteraction, 200);
+    });
 
     checkScroll(); // 初始检查，防止刷新后动画丢失
 });
