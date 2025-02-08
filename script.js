@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
+    const texts = document.querySelectorAll(".fade-text");
     let ticking = false;
     let isTouching = false;
     let lastTouchTime = 0;
 
     function checkScroll() {
-        sections.forEach((section) => {
-            let rect = section.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.25) {
-                section.classList.add("visible");
+        texts.forEach((text) => {
+            let rect = text.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                text.classList.add("visible");
             } else {
-                section.classList.remove("visible");
+                text.classList.remove("visible");
             }
         });
 
