@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    font-family: "Inter", sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -9,7 +9,6 @@ body {
     scroll-behavior: smooth;
 }
 
-/* 头部 */
 header {
     background-color: #333;
     color: white;
@@ -18,24 +17,13 @@ header {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* 主要板块 */
-section {
-    background-color: white;
-    padding: 50px 20px;
-    margin: 40px auto;
-    max-width: 900px;
-    border-radius: 30px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
-
-/* 文字样式 */
 h1, h2 {
     font-weight: 600;
 }
 
-/* 按钮 */
 .btn {
     display: inline-block;
+    margin-top: 20px;
     padding: 12px 24px;
     background-color: #0071e3;
     color: white;
@@ -49,14 +37,6 @@ h1, h2 {
 .btn:hover {
     background-color: #005bb5;
     box-shadow: 0 6px 15px rgba(0, 113, 227, 0.5);
-}
-
-/* 服务板块 */
-#services {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
 }
 
 .service {
@@ -73,24 +53,20 @@ h1, h2 {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* 底部 */
-footer {
-    background-color: #111;
-    color: white;
-    padding: 15px;
-    font-size: 14px;
-    border-radius: 30px 30px 0 0;
-}
-
-/* ✨ 滚动动画 */
+/* 🌟 进场动画 */
 .fade-section {
     opacity: 0;
     transform: translateY(20px) scale(0.98);
     filter: blur(5px);
-    transition: opacity 0.6s cubic-bezier(.25, .8, .25, 1), 
-                transform 0.6s cubic-bezier(.25, .8, .25, 1),
-                filter 0.6s cubic-bezier(.25, .8, .25, 1);
+    transition: opacity 0.4s cubic-bezier(.3, .9, .3, 1), 
+                transform 0.4s cubic-bezier(.3, .9, .3, 1),
+                filter 0.4s cubic-bezier(.3, .9, .3, 1);
 }
+
+/* 交错动画 */
+.fade-section:nth-child(2) { transition-delay: 0.1s; }
+.fade-section:nth-child(3) { transition-delay: 0.2s; }
+.fade-section:nth-child(4) { transition-delay: 0.3s; }
 
 .fade-section.visible {
     opacity: 1;
@@ -98,28 +74,14 @@ footer {
     filter: blur(0);
 }
 
-/* ✨ 滚动时的阴影变化（更立体） */
-.fade-section {
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-}
-
-.fade-section.visible {
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* ✨ 按钮 & 图片动画 */
+/* 按钮独立动画 */
 .fade-button {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
 .fade-button.visible {
     opacity: 1;
     transform: translateY(0);
 }
-
-/* ✨ 进场动画时间差（增强层次感） */
-.fade-section:nth-child(2) { transition-delay: 0.2s; }
-.fade-section:nth-child(3) { transition-delay: 0.4s; }
-.fade-section:nth-child(4) { transition-delay: 0.6s; }
