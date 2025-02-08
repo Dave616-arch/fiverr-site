@@ -1,17 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-    function checkScroll() {
-        let elements = document.querySelectorAll(".fade-section, .fade-button");
-        elements.forEach(el => {
-            let rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.85) {
-                el.classList.add("visible");
+    let elements = document.querySelectorAll(".fade-section, .fade-button");
+
+    let observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            } else {
+                entry.target.classList.remove("visible"); // 滚动回顶部时重新触发
             }
         });
-    }
+    }, { threshold: 0.15 }); // 提前触发动画，减少滚动到底部的延迟
 
-    document.addEventListener("scroll", () => {
-        requestAnimationFrame(checkScroll);
+    elements.forEach((el, index) => {
+        el.style.setProperty("--index", index);
+        observer.observe(el);
     });
-
-    checkScroll(); // 确保刷新页面时动画也能正常触发
 });
