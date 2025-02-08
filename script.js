@@ -1,9 +1,9 @@
-let timeout = null; // 用于检测手指是否真的离开
-let lastInteractionTime = 0; // 记录最后一次交互时间
+let timeout = null;
+let isUserScrolling = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
-    
+
     function checkScroll() {
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
@@ -34,36 +34,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function smoothScrollToSection(section) {
-        if (!section) return;
+        if (!section || isUserScrolling) return;
         section.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function handleEndInteraction() {
-        let now = Date.now();
-        if (now - lastInteractionTime >= 200) {
+        if (!isUserScrolling) {
             let closestSection = findClosestSection();
             smoothScrollToSection(closestSection);
         }
     }
 
-    document.addEventListener("scroll", () => {
-        lastInteractionTime = Date.now();
+    function startUserScroll() {
+        isUserScrolling = true;
         clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 200);
+    }
+
+    function stopUserScroll() {
+        isUserScrolling = false;
+        clearTimeout(timeout);
+        timeout = setTimeout(handleEndInteraction, 300); // 停止滑动 0.3 秒后再触发
+    }
+
+    document.addEventListener("scroll", () => {
+        startUserScroll();
         requestAnimationFrame(checkScroll);
     });
 
-    document.addEventListener("touchend", () => {
-        lastInteractionTime = Date.now();
-        clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 200);
-    });
+    document.addEventListener("touchmove", startUserScroll);
+    document.addEventListener("mousemove", startUserScroll);
 
-    document.addEventListener("mouseup", () => {
-        lastInteractionTime = Date.now();
-        clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 200);
-    });
+    document.addEventListener("touchend", stopUserScroll);
+    document.addEventListener("mouseup", stopUserScroll);
 
     checkScroll(); // 初始检查，防止刷新后动画丢失
 });
