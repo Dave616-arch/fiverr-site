@@ -1,51 +1,52 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll(".fade-section");
+    const buttons = document.querySelectorAll(".fade-button");
+    let ticking = false;
+
     function checkScroll() {
-        let sections = document.querySelectorAll(".fade-section");
-        let windowHeight = window.innerHeight;
-        let middleScreen = windowHeight / 2; 
-
-        let closestSection = null;
-        let closestDistance = Infinity;
-
-        sections.forEach(section => {
+        sections.forEach((section, index) => {
             let rect = section.getBoundingClientRect();
-            let sectionMiddle = rect.top + rect.height / 2;
-            let distance = Math.abs(middleScreen - sectionMiddle);
-
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestSection = section;
-            }
-
-            if (rect.top < windowHeight * 0.85 && rect.bottom > 0) {
+            if (rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.25) {
                 section.classList.add("visible");
             } else {
                 section.classList.remove("visible");
             }
         });
 
-        if (closestSection) {
-            document.querySelectorAll(".fade-section").forEach(sec => sec.classList.remove("active"));
-            closestSection.classList.add("active");
-        }
+        updateActiveSection();
+    }
+
+    function updateActiveSection() {
+        let centerIndex = 0;
+        let minDistance = Infinity;
+
+        sections.forEach((section, index) => {
+            let rect = section.getBoundingClientRect();
+            let centerDistance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+            if (centerDistance < minDistance) {
+                minDistance = centerDistance;
+                centerIndex = index;
+            }
+        });
+
+        sections.forEach((section, index) => {
+            if (index === centerIndex) {
+                section.classList.add("active-section");
+            } else {
+                section.classList.remove("active-section");
+            }
+        });
     }
 
     document.addEventListener("scroll", () => {
-        requestAnimationFrame(checkScroll);
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                checkScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
 
-    checkScroll(); // Initial check on page load
-
-    // 📌 自动居中 & 滚动结束后自动放大
-    let scrollTimer;
-    document.addEventListener("scroll", () => {
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-            let activeSection = document.querySelector(".fade-section.active");
-            if (activeSection) {
-                let offset = activeSection.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + activeSection.clientHeight / 2;
-                window.scrollTo({ top: offset, behavior: "smooth" });
-            }
-        }, 200);
-    });
+    checkScroll(); // Ensure animation triggers on load
 });
