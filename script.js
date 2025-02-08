@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
     const texts = document.querySelectorAll(".fade-text");
+    const portfolioItems = document.querySelectorAll(".portfolio-item");
     let ticking = false;
     let isTouching = false;
     let lastTouchTime = 0;
@@ -24,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sections.forEach((section, index) => {
             let rect = section.getBoundingClientRect();
+            
+            // **忽略小板块，只计算大板块**
+            if (section.classList.contains("portfolio-item")) return;
+            
             let centerDistance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
             if (centerDistance < minDistance) {
                 minDistance = centerDistance;
