@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
-    const buttons = document.querySelectorAll(".fade-button");
     let ticking = false;
 
     function checkScroll() {
-        sections.forEach((section, index) => {
+        sections.forEach((section) => {
             let rect = section.getBoundingClientRect();
             if (rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.25) {
                 section.classList.add("visible");
@@ -36,6 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 section.classList.remove("active-section");
             }
         });
+
+        // 滚动结束时，自动对齐最近的板块
+        clearTimeout(window.scrollTimeout);
+        window.scrollTimeout = setTimeout(() => {
+            let targetSection = sections[centerIndex];
+            if (targetSection) {
+                window.scrollTo({
+                    top: window.scrollY + targetSection.getBoundingClientRect().top - (window.innerHeight / 2) + (targetSection.offsetHeight / 2),
+                    behavior: "smooth"
+                });
+            }
+        }, 200); // 200ms 之后触发，以防止频繁调整
     }
 
     document.addEventListener("scroll", () => {
@@ -48,5 +59,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    checkScroll(); // Ensure animation triggers on load
+    checkScroll(); // 确保初始加载时就有动画
 });
