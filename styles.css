@@ -39,35 +39,34 @@ h1, h2 {
     box-shadow: 0 6px 15px rgba(0, 113, 227, 0.5);
 }
 
-#services {
+section {
     margin: 60px auto;
     padding: 30px;
     max-width: 900px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+#services, #portfolio {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
 }
 
-.service {
-    background-color: white;
-    padding: 25px;
+.service, .portfolio-item {
     width: 280px;
+    padding: 25px;
     border-radius: 20px;
+    background: white;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.service:hover {
+.service:hover, .portfolio-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-#contact {
-    padding: 40px;
-    background-color: #222;
-    color: white;
-    border-radius: 30px 30px 0 0;
 }
 
 footer {
@@ -75,31 +74,31 @@ footer {
     color: white;
     padding: 15px;
     font-size: 14px;
+    border-radius: 30px 30px 0 0;
 }
 
-/* 🚀 滚动动画优化：每个区块单独动画 */
+/* ✨ 滚动动画优化 */
 .fade-section {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
     filter: blur(8px);
-    transition: all 0.8s cubic-bezier(.165, .84, .44, 1);
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    transition: opacity 0.8s cubic-bezier(.165, .84, .44, 1),
+                transform 0.8s cubic-bezier(.165, .84, .44, 1),
+                filter 0.8s ease-out;
 }
 
-/* ✅ 进入视口时动画 */
+/* 交错动画 */
+.fade-section:nth-child(n) {
+    transition-delay: calc(var(--index, 1) * 0.1s);
+}
+
 .fade-section.visible {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* 🎭 交错动画（层次感） */
-.fade-section:nth-child(2) { transition-delay: 0.2s; }
-.fade-section:nth-child(3) { transition-delay: 0.4s; }
-.fade-section:nth-child(4) { transition-delay: 0.6s; }
-
-/* 🎨 让按钮、图片等 UI 组件也有独立动画 */
+/* ✨ 按钮动画 */
 .fade-button {
     opacity: 0;
     transform: translateY(20px);
