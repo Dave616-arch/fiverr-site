@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(".fade-section");
-    const texts = document.querySelectorAll(".fade-text");
-    const portfolioItems = document.querySelectorAll(".portfolio-item");
-    let ticking = false;
+    const sections = [...document.querySelectorAll(".fade-section")]; 
+    const texts = [...document.querySelectorAll(".fade-text")];
     let isTouching = false;
     let lastTouchTime = 0;
-
+    
     function checkScroll() {
         texts.forEach((text) => {
             let rect = text.getBoundingClientRect();
@@ -20,16 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateActiveSection() {
-        let centerIndex = 0;
+        let centerIndex = -1;
         let minDistance = Infinity;
 
         sections.forEach((section, index) => {
             let rect = section.getBoundingClientRect();
-            
-            // **忽略小板块，只计算大板块**
+            let centerDistance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+
+            // **忽略小板块**
             if (section.classList.contains("portfolio-item")) return;
             
-            let centerDistance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
             if (centerDistance < minDistance) {
                 minDistance = centerDistance;
                 centerIndex = index;
@@ -54,18 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         behavior: "smooth"
                     });
                 }
-            }, 100);
+            }, 200);
         }
     }
 
     document.addEventListener("scroll", () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                checkScroll();
-                ticking = false;
-            });
-            ticking = true;
-        }
+        requestAnimationFrame(checkScroll);
     });
 
     document.addEventListener("touchstart", () => { isTouching = true; });
