@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let rect = section.getBoundingClientRect();
             if (rect.top < window.innerHeight * 0.85) {
                 section.classList.add("visible");
-            } else {
-                section.classList.remove("visible"); // 滚动回去时重新触发
             }
         });
     }
@@ -15,5 +13,5 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(checkScroll);
     });
 
-    checkScroll(); // 页面加载时检查，避免刷新后动画丢失
+    checkScroll(); // Ensure animation runs on page load
 });
