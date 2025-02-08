@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // 滚动结束时，自动对齐最近的板块
+        // Auto-align nearest section
         clearTimeout(window.scrollTimeout);
         window.scrollTimeout = setTimeout(() => {
             let targetSection = sections[centerIndex];
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     behavior: "smooth"
                 });
             }
-        }, 200); // 200ms 之后触发，以防止频繁调整
+        }, 100);
     }
 
     document.addEventListener("scroll", () => {
@@ -59,5 +59,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    checkScroll(); // 确保初始加载时就有动画
+    checkScroll(); // Ensure animations apply on page load
 });
