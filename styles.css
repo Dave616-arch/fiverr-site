@@ -9,6 +9,7 @@ body {
     scroll-behavior: smooth;
 }
 
+/* Header styling */
 header {
     background: #ffffff;
     padding: 80px 20px;
@@ -27,7 +28,7 @@ section {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    margin-bottom: 20px; /* 之前 30px，减少空白 */
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
@@ -45,9 +46,9 @@ section {
     filter: blur(0);
 }
 
-/* Enlarging effect for active section */
+/* Active section effect (reduce scale to prevent overflow) */
 .active-section {
-    transform: scale(1.15) !important;
+    transform: scale(1.05) !important; /* 之前是 1.15，防止溢出 */
     transition: transform 0.2s ease-out;
 }
 
