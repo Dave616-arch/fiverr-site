@@ -1,4 +1,4 @@
-/* General styles */
+/* 🌟 全局样式 */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
@@ -9,7 +9,7 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Header styling */
+/* 🏠 头部 */
 header {
     background: #ffffff;
     padding: 80px 20px;
@@ -20,7 +20,7 @@ header {
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
-/* Section styling */
+/* 📦 Section 样式 */
 section {
     padding: 80px 20px;
     max-width: 800px;
@@ -33,16 +33,30 @@ section {
     transform: scale(1.0);
 }
 
-/* 滚动时的动态缩放 */
+/* 📌 滚动缩放动画 */
 .section-near-center {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 .section-center {
     transform: scale(1.1);
 }
 
-/* Fade effect for text */
+/* 📱 针对移动端优化（适配手机和平板） */
+@media (max-width: 1024px) {
+    section {
+        max-width: 95%;
+        padding: 60px 15px;
+    }
+    .section-near-center {
+        transform: scale(1.03);
+    }
+    .section-center {
+        transform: scale(1.08);
+    }
+}
+
+/* 🎨 文字淡入效果 */
 .fade-text {
     opacity: 0;
     transform: translateY(20px);
@@ -54,12 +68,4 @@ section {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
-}
-
-/* Mobile optimization */
-@media (max-width: 768px) {
-    section {
-        padding: 60px 15px;
-        max-width: 90%;
-    }
 }
