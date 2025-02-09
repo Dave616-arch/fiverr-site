@@ -3,16 +3,30 @@ let lastInteractionTime = 0; // 记录最后一次交互时间
 let disableZoom = false; // 是否禁用双击放大
 
 document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(".fade-section");
+    const sections = document.querySelectorAll("section");
     const texts = document.querySelectorAll(".fade-text");
 
     function checkScroll() {
+        let closestSection = findClosestSection();
+
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
-                section.classList.add("visible");
+            const center = rect.top + rect.height / 2;
+            const screenCenter = window.innerHeight / 2;
+            const distance = Math.abs(center - screenCenter);
+
+            // 计算缩放比例
+            if (distance < 100) {
+                // 最接近屏幕中心的 section，放大 1.1 倍
+                section.classList.add("section-center");
+                section.classList.remove("section-near-center");
+            } else if (distance < 250) {
+                // 进入屏幕但不在中心，放大 1.05 倍
+                section.classList.add("section-near-center");
+                section.classList.remove("section-center");
             } else {
-                section.classList.remove("visible");
+                // 其他部分恢复正常大小
+                section.classList.remove("section-near-center", "section-center");
             }
         });
 
@@ -47,11 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function smoothScrollToSection(section) {
         if (!section) return;
         section.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // 让目标 section 放大
+        sections.forEach(sec => sec.classList.remove("section-center"));
+        section.classList.add("section-center");
     }
 
     function handleEndInteraction() {
         let now = Date.now();
-        if (now - lastInteractionTime >= 700) { // 700ms 检测
+        if (now - lastInteractionTime >= 700) {
             let closestSection = findClosestSection();
             smoothScrollToSection(closestSection);
             disableZoom = false; // 允许放大
