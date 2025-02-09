@@ -1,10 +1,11 @@
 let timeout = null; // 用于检测手指是否真的离开
 let lastInteractionTime = 0; // 记录最后一次交互时间
-let disableZoom = false; // 是否禁用自动放大
+let disableZoom = false; // 是否禁用双击放大
 
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
-    
+    const texts = document.querySelectorAll(".fade-text");
+
     function checkScroll() {
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
@@ -12,6 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 section.classList.add("visible");
             } else {
                 section.classList.remove("visible");
+            }
+        });
+
+        texts.forEach(text => {
+            const rect = text.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
+                text.classList.add("visible");
+            } else {
+                text.classList.remove("visible");
             }
         });
     }
