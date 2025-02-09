@@ -1,5 +1,6 @@
 let timeout = null; // 用于检测手指是否真的离开
 let lastInteractionTime = 0; // 记录最后一次交互时间
+let disableZoom = false; // 是否禁用自动放大
 
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll(".fade-section");
@@ -40,30 +41,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function handleEndInteraction() {
         let now = Date.now();
-        if (now - lastInteractionTime >= 700) { // 由 400 改为 700
+        if (now - lastInteractionTime >= 700) { // 700ms 检测
             let closestSection = findClosestSection();
             smoothScrollToSection(closestSection);
+            disableZoom = false; // 允许放大
         }
     }
 
-    document.addEventListener("scroll", () => {
+    function resetInteractionTimer() {
         lastInteractionTime = Date.now();
         clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 700); // 由 400 改为 700
+        timeout = setTimeout(handleEndInteraction, 700);
+        disableZoom = true; // 禁用放大
+    }
+
+    document.addEventListener("scroll", () => {
+        resetInteractionTimer();
         requestAnimationFrame(checkScroll);
     });
 
-    document.addEventListener("touchend", () => {
-        lastInteractionTime = Date.now();
-        clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 700); // 由 400 改为 700
-    });
+    document.addEventListener("touchstart", resetInteractionTimer);
+    document.addEventListener("touchmove", resetInteractionTimer);
+    document.addEventListener("touchend", resetInteractionTimer);
+    document.addEventListener("mousedown", resetInteractionTimer);
+    document.addEventListener("mouseup", resetInteractionTimer);
 
-    document.addEventListener("mouseup", () => {
-        lastInteractionTime = Date.now();
-        clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 700); // 由 400 改为 700
-    });
+    // 阻止双击放大
+    document.addEventListener("dblclick", (event) => {
+        if (disableZoom) {
+            event.preventDefault();
+        }
+    }, { passive: false });
 
     checkScroll(); // 初始检查，防止刷新后动画丢失
 });
