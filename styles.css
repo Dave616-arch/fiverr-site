@@ -28,8 +28,18 @@ section {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* 之前 30px，减少空白 */
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-out;
+    transform: scale(1.0);
+}
+
+/* 滚动时的动态缩放 */
+.section-near-center {
+    transform: scale(1.05);
+}
+
+.section-center {
+    transform: scale(1.1);
 }
 
 /* Fade effect for text */
@@ -44,12 +54,6 @@ section {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
-}
-
-/* Active section effect (reduce scale to prevent overflow) */
-.active-section {
-    transform: scale(1.05) !important; /* 之前是 1.15，防止溢出 */
-    transition: transform 0.2s ease-out;
 }
 
 /* Mobile optimization */
