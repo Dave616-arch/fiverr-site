@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function handleEndInteraction() {
         let now = Date.now();
-        if (now - lastInteractionTime >= 400) { // 由 200 改为 400
+        if (now - lastInteractionTime >= 700) { // 由 400 改为 700
             let closestSection = findClosestSection();
             smoothScrollToSection(closestSection);
         }
@@ -49,20 +49,20 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("scroll", () => {
         lastInteractionTime = Date.now();
         clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 400); // 由 200 改为 400
+        timeout = setTimeout(handleEndInteraction, 700); // 由 400 改为 700
         requestAnimationFrame(checkScroll);
     });
 
     document.addEventListener("touchend", () => {
         lastInteractionTime = Date.now();
         clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 400); // 由 200 改为 400
+        timeout = setTimeout(handleEndInteraction, 700); // 由 400 改为 700
     });
 
     document.addEventListener("mouseup", () => {
         lastInteractionTime = Date.now();
         clearTimeout(timeout);
-        timeout = setTimeout(handleEndInteraction, 400); // 由 200 改为 400
+        timeout = setTimeout(handleEndInteraction, 700); // 由 400 改为 700
     });
 
     checkScroll(); // 初始检查，防止刷新后动画丢失
